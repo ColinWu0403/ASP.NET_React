@@ -23,3 +23,5 @@ wwwroot
 *.njsproj
 *.sln
 *.sw?
+obj
+bin
