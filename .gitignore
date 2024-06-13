@@ -23,5 +23,6 @@ wwwroot
 *.njsproj
 *.sln
 *.sw?
+.env
 obj
 bin
