@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 RunNpmInstall();
 RunNpmBuild();
 
+// Add logging configuration
+builder.Logging.AddConsole(); // Enable console logging
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -17,9 +20,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Configure logging
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("Application started.");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseCors("AllowAll"); // Enable CORS
 
 app.UseEndpoints(endpoints =>
 {

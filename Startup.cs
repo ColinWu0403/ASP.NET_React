@@ -13,11 +13,11 @@ public class Startup
         // Configure CORS to allow requests from your React frontend
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowFrontend", builder =>
+            options.AddPolicy("AllowAll", builder =>
             {
-                builder.WithOrigins("http://localhost:5173") // Update with your React frontend URL
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                 builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
             });
         });
     }
@@ -30,16 +30,20 @@ public class Startup
         }
         else
         {
+            app.UseExceptionHandler("/Error");
             app.UseHsts();
         }
 
         app.UseHttpsRedirection();
-        app.UseStaticFiles();
         app.UseRouting();
 
-        // Enable CORS
-        app.UseCors("AllowFrontend");
+        app.UseStaticFiles();
 
+        // Enable CORS
+        app.UseCors("AllowAll");
+
+        app.UseAuthorization();
+        
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
